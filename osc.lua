@@ -123,6 +123,10 @@ local user_opts = {
     fullscreen_mbtn_mid_command = "",
     fullscreen_mbtn_right_command = "cycle window-maximized",
     -- luacheck: pop
+
+    -- thumbfast style
+    thumb_primary_color = "#000000",
+    thumb_primary_alpha = "20",  -- 00 (opaque) to FF (fully transparent)
 }
 
 for i = 1, 99 do
@@ -1051,7 +1055,11 @@ local function render_elements(master_ass)
                             elem_ass:pos(thumb_x * r_w, thumb_y * r_h)
                             elem_ass:an(7)
                             elem_ass:append(osc_styles.timePosBar)
-                            elem_ass:append("{\\1a&H20&}")
+                            elem_ass:append(string.format(
+                                "{\\1c&H%s&\\1a&H%s&}",
+                                osc_color_convert(user_opts.thumb_primary_color),
+                                user_opts.thumb_primary_alpha
+                            ))
                             elem_ass:draw_start()
                             elem_ass:rect_cw(-thumb_pad * r_w, -thumb_pad * r_h, (thumbfast.width + thumb_pad) * r_w, (thumbfast.height + thumb_pad) * r_h)
                             elem_ass:draw_stop()
